@@ -14,9 +14,10 @@ func homePage(w http.ResponseWriter, r *http.Request){
 
 func handleRequests() {
     http.HandleFunc("/", homePage)
-    log.Fatal(http.ListenAndServe(":10000", nil))
+    log.Fatal(https.ListenAndServe(":9443", nil))
 }
 
 func main() {
+	fmt.Println("entered main GO routine!")
     handleRequests()
 }

@@ -10,11 +10,19 @@ LABEL vendor="Kabanero" \
 COPY LICENSE /licenses/
 
 USER root
-RUN chmod -R 777 /usr/local/bin
-RUN echo 'right before copy of main.go'
-RUN ls -l build/_output/bin
-COPY build/_output/bin/kabanero-rest-services/main /usr/local/bin/main
 COPY build/bin /usr/local/bin
+RUN chmod -R 777 /usr/local/bin
+COPY build/bin/entrypoint /usr/local/bin/entrypoint
+
+RUN echo 'right before entrypoint stuff: '
+RUN ls -l /usr/local/bin/entrypoint
+RUN chmod +x /usr/local/bin/entrypoint
+
+
+RUN echo 'right before copy of main.go'
+COPY build/_output/bin/kabanero-rest-services/main /usr/local/bin/main
+RUN chmod +x /usr/local/bin/main
+
 USER 1001
 
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
